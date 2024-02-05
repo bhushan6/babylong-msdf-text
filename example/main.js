@@ -45,12 +45,13 @@ const createScene = function (engine) {
 
 const scene = createScene(engine);
 
+const atlas = new BABYLON.Texture(png, scene);
+
 let textMesh = createTextMesh({
   text: `Hello`,
   font: fnt,
   scene,
-  atlas: png,
-  engine,
+  atlas,
   color: new BABYLON.Color3(1, 0, 0),
   ...PARAMS,
 });
@@ -58,39 +59,38 @@ let textMesh = createTextMesh({
 textMesh.position.x = -textMesh.getBoundingInfo().boundingBox.center.x / 2;
 textMesh.position.y = textMesh.getBoundingInfo().boundingBox.center.y / 2;
 
-const sceneSize = 100;
-const initialCount = 2;
-var addPerFrame = 2;
+// const sceneSize = 100;
+// const initialCount = 2;
+// var addPerFrame = 2;
 
 // let total = 0;
-const createTextInstance = function() {
-        // if (total > maxCount) {
-        //     addPerFrame = 0;
-        //     scene.freeActiveMeshes();
-        //     return;
-        // }
-        // total++;
-        var clone = textMesh.createInstance(i + "text")
-        let radius = Math.random() * 2.5 * sceneSize;
-        let angle = Math.PI * 2 * Math.random();
-        clone.position = new BABYLON.Vector3(
-          Math.cos(angle) * radius,
-          Math.random() * 2 * sceneSize - sceneSize,
-          Math.sin(angle) * radius
-        );
+// const createTextInstance = function () {
+//   // if (total > maxCount) {
+//   //     addPerFrame = 0;
+//   //     scene.freeActiveMeshes();
+//   //     return;
+//   // }
+//   // total++;
+//   var clone = textMesh.createInstance(i + "text");
+//   let radius = Math.random() * 2.5 * sceneSize;
+//   let angle = Math.PI * 2 * Math.random();
+//   clone.position = new BABYLON.Vector3(
+//     Math.cos(angle) * radius,
+//     Math.random() * 2 * sceneSize - sceneSize,
+//     Math.sin(angle) * radius
+//   );
 
-        clone.rotation.x = 3.14;
-        clone.rotationQuaternion = null;
-        clone.alwaysSelectAsActiveMesh = true;
-        clone.freezeWorldMatrix();
-        clone.isPickable = false;
-        clone.material.freeze();
-    }
+//   clone.rotation.x = 3.14;
+//   clone.rotationQuaternion = null;
+//   clone.alwaysSelectAsActiveMesh = true;
+//   clone.freezeWorldMatrix();
+//   clone.isPickable = false;
+//   clone.material.freeze();
+// };
 
-    for (let i = 0; i < initialCount; i++) {
-        createTextInstance();
-    }
-
+// for (let i = 0; i < initialCount; i++) {
+//   createTextInstance();
+// }
 
 //GUI PANEL
 const pane = new Pane();
@@ -144,9 +144,9 @@ const updateMesh = () => {
   textMesh.position.x = -textMesh.getBoundingInfo().boundingBox.center.x / 2;
   textMesh.position.y = textMesh.getBoundingInfo().boundingBox.center.y / 2;
 
-  for (let i = 0; i < initialCount; i++) {
-    createTextInstance();
-}
+  // for (let i = 0; i < initialCount; i++) {
+  //   createTextInstance();
+  // }
 };
 
 lineHeightInput.on("change", (e) => {
@@ -177,25 +177,22 @@ opacityInput.on("change", (e) => {
   updateMesh();
 });
 
+// let alphaSpeed = 0.001;
+// scene.registerBeforeRender(() => {
+//     scene.activeCamera.alpha += alphaSpeed;
 
+//     if (alphaSpeed < 0.005) {
+//         alphaSpeed *= 1.05;
+//     }
 
+//     for (var i = 0; i < addPerFrame; i++) {
+//         createTextInstance();
+//     }
+// });
 
-    // let alphaSpeed = 0.001;
-    // scene.registerBeforeRender(() => {
-    //     scene.activeCamera.alpha += alphaSpeed;
-
-    //     if (alphaSpeed < 0.005) {
-    //         alphaSpeed *= 1.05;
-    //     }
-
-    //     for (var i = 0; i < addPerFrame; i++) {
-    //         createTextInstance();
-    //     }
-    // });  
-
-    for (var i = 0; i < addPerFrame; i++) {
-      // createTextInstance();
-    }
+// for (var i = 0; i < addPerFrame; i++) {
+//   // createTextInstance();
+// }
 
 engine.runRenderLoop(function () {
   scene.render();
